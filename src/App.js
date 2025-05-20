@@ -1,48 +1,15 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./HomePage";
-import AddTransactionPage from "./AddTransactionPage";
-import TransactionsPage from "./TransactionsPage";
+import React from 'react';
+import { ExpenseProvider } from './context/ExpenseContext';
+import ExpenseTracker from './components/ExpenseTracker';
 
-const App = () => {
-  const [transactions, setTransactions] = useState([]);
-
-  const AddTransactions = (payload) => {
-    setTransactions([...transactions, payload]);
-  };
-
-  const removeTransaction = (id) => {
-    setTransactions(transactions.filter((transaction) => transaction.id !== id));
-  };
-
+function App() {
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              transactions={transactions}
-              setTransactions={setTransactions}
-            />
-          }
-        />
-        <Route
-          path="/add-transaction"
-          element={<AddTransactionPage AddTransactions={AddTransactions} />}
-        />
-        <Route
-          path="/transactions"
-          element={
-            <TransactionsPage
-              transactions={transactions}
-              removeTransaction={removeTransaction}
-            />
-          }
-        />
-      </Routes>
-    </Router>
+    <ExpenseProvider>
+      <div className="App">
+        <ExpenseTracker />
+      </div>
+    </ExpenseProvider>
   );
-};
+}
 
 export default App;
